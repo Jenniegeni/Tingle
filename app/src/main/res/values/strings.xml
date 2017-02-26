@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Tingle</string>
+    <string name="where">Where?</string>
+    <string name="what_thing">What thing?</string>
+    <string name="last_thing_added">Last thing added: </string>
+    <string name="new_thing">Add New Thing</string>
+    <string name="list_all_things">List all things</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
