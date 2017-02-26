@@ -10,51 +10,51 @@ public class ThingsDB extends Observable {
 
     private static ThingsDB sThingsDB;
     //fake database
-    private List<Thing> mThingsDB;
+    private List<Thing> mThingList;
 
-    public static ThingsDB get(Context context) {
+    public static ThingsDB getInstance(Context context) {
         if (sThingsDB == null) {
-            sThingsDB= new ThingsDB(context);
+            sThingsDB = new ThingsDB(context);
         }
         return sThingsDB;
     }
 
-    public List<Thing> getThingsDB() {
-        return mThingsDB;
+    public List<Thing> getThingList() {
+        return mThingList;
     }
 
     public void addThing(Thing thing) {
-        mThingsDB.add(thing);
+        mThingList.add(thing);
         setChanged();
         notifyObservers();
     }
 
     public void deleteThing(Thing thing) {
-        mThingsDB.remove(thing);
+        mThingList.remove(thing);
         setChanged();
         notifyObservers();
     }
 
 
     public int size() {
-        return mThingsDB.size();
+        return mThingList.size();
     }
 
-    public Thing get(int i){
-        return mThingsDB.get(i);
+    public Thing getThing(int i){
+        return mThingList.get(i);
     }
 
 
     // Fill database for testing purposes
     private ThingsDB(Context context) {
-        mThingsDB= new ArrayList<Thing>();
-        mThingsDB.add(new Thing("Android Phone", "Desk"));
-        mThingsDB.add(new Thing("Big Nerd book", "Desk"));
-        mThingsDB.add(new Thing("Pillow", "Bed"));
-        mThingsDB.add(new Thing("Computer", "Desk"));
-        mThingsDB.add(new Thing("T-shirt", "Wardrobe"));
-        mThingsDB.add(new Thing("Charger", "Desk"));
-        mThingsDB.add(new Thing("Backpack", "Floor"));
-        mThingsDB.add(new Thing("Kleenex", "Drawer"));
+        mThingList = new ArrayList<Thing>();
+        mThingList.add(new Thing("Android Phone", "Desk"));
+        mThingList.add(new Thing("Big Nerd book", "Desk"));
+        mThingList.add(new Thing("Pillow", "Bed"));
+        mThingList.add(new Thing("Computer", "Desk"));
+        mThingList.add(new Thing("T-shirt", "Wardrobe"));
+        mThingList.add(new Thing("Charger", "Desk"));
+        mThingList.add(new Thing("Backpack", "Floor"));
+        mThingList.add(new Thing("Kleenex", "Drawer"));
     }
 }

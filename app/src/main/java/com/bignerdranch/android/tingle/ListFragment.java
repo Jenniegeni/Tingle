@@ -30,17 +30,17 @@ public class ListFragment extends Fragment implements Observer {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
 
-        thingsDB = ThingsDB.get(getActivity());
+        thingsDB = ThingsDB.getInstance(getActivity());
         thingsDB.addObserver(this);
-        listAdapter = new ArrayAdapter<Thing>(getActivity(), R.layout.list_item, thingsDB.getThingsDB());
+        listAdapter = new ArrayAdapter<Thing>(getActivity(), R.layout.list_item, thingsDB.getThingList());
         thingListView = (ListView) v.findViewById(R.id.thing_list_view);
         thingListView.setAdapter(listAdapter);
 
         thingListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) { //when an item is being longClicked
                 final int POSITION = position;
-                AlertDialog.Builder deleteAlert = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder deleteAlert = new AlertDialog.Builder(getActivity());    //creating an alert dialog
                 deleteAlert.setMessage(R.string.dialog_message)
                         .setTitle(R.string.dialog_title);
                 deleteAlert.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

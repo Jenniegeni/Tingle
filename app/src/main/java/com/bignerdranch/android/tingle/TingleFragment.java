@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Observable;
@@ -26,37 +24,40 @@ public class TingleFragment extends Fragment implements Observer {
 
     private static ThingsDB thingsDB;
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-    }
-
-    @Override
+    @Override                                                       //onCreate
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        thingsDB = ThingsDB.getInstance(getActivity());
+        thingsDB.addObserver(this);
     }
 
-    private void updateUI() {
+    private void updateLastThing() {
         int s = thingsDB.size();
-        if (s > 0) lastAddedText.setText(thingsDB.get(s - 1).toString());
+        if (s > 0) lastAddedText.setText(thingsDB.getThing(s - 1).toString());
         else lastAddedText.setText(R.string.empty_list);
     }
 
-    @Override
+    @Override                                                       //OnCreateView
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tingle, container, false);
 
-        thingsDB = ThingsDB.get(getActivity());
-        thingsDB.addObserver(this);
-        //Accessing GUI element
+        //Accessing GUI elements
+// Textview
         lastAddedText = (TextView) v.findViewById(R.id.last_thing);
-        updateUI();
+        updateLastThing();
 // Button
         addThingButton =(Button) v.findViewById(R.id.add_button);
-// Textfields for describing a thing
+        addThingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addThing();
+            }
+        });
+// EditTexts for describing a thing
         whatInput = (EditText) v.findViewById(R.id.what_text);
         whereInput = (EditText) v.findViewById(R.id.where_text);
-        whereInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        whereInput.setOnEditorActionListener(new TextView.OnEditorActionListener() { //enables enter for 'sending'
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
@@ -67,13 +68,7 @@ public class TingleFragment extends Fragment implements Observer {
                 return handled;
             }
         });
-        // view products click event
-        addThingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addThing();
-            }
-        });
+// Button
         listAllThings = (Button) v.findViewById(R.id.list_all_things);
         listAllThings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,12 +87,12 @@ public class TingleFragment extends Fragment implements Observer {
                     new Thing(whatInput.getText().toString(), whereInput.getText().toString()));
             whatInput.setText("");
             whereInput.setText("");
-            updateUI();
+            updateLastThing();
         }
-    }
+    } //add thing method
 
     @Override
-    public void update(Observable o, Object arg) {
-        updateUI();
+    public void update(Observable o, Object arg) { //called from notityObservers
+        updateLastThing();
     }
 }

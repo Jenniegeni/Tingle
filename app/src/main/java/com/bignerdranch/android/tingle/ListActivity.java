@@ -4,9 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -16,11 +13,11 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        Fragment fragment = fm.findFragmentById(R.id.tingle_fragment_container);
 
         if (fragment == null) {
             fragment = new ListFragment();
-            fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
+            fm.beginTransaction().add(R.id.tingle_fragment_container, fragment).commit();
         }
 
     }
