@@ -23,10 +23,10 @@ public class TingleActivity extends AppCompatActivity {
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             FragmentManager fm = getSupportFragmentManager();
-            Fragment fragmentLeft = fm.findFragmentById(R.id.fragment_left);
+            Fragment fragmentLeft = fm.findFragmentById(R.id.fragment_container);
             if (fragmentLeft == null) {
                 fragmentLeft = new TingleFragment();
-                fm.beginTransaction().add(R.id.fragment_left, fragmentLeft).commit();
+                fm.beginTransaction().add(R.id.fragment_container, fragmentLeft).commit();
             }
 
             Fragment fragmentRight = fm.findFragmentById(R.id.fragment_right);

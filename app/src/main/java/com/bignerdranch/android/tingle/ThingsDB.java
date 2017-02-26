@@ -4,8 +4,9 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class ThingsDB {
+public class ThingsDB extends Observable {
 
     private static ThingsDB sThingsDB;
     //fake database
@@ -24,7 +25,16 @@ public class ThingsDB {
 
     public void addThing(Thing thing) {
         mThingsDB.add(thing);
+        setChanged();
+        notifyObservers();
     }
+
+    public void deleteThing(Thing thing) {
+        mThingsDB.remove(thing);
+        setChanged();
+        notifyObservers();
+    }
+
 
     public int size() {
         return mThingsDB.size();
@@ -33,6 +43,7 @@ public class ThingsDB {
     public Thing get(int i){
         return mThingsDB.get(i);
     }
+
 
     // Fill database for testing purposes
     private ThingsDB(Context context) {

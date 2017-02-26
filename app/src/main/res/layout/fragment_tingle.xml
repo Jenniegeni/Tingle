@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/last_thing_added"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             />
 
         <TextView
@@ -46,7 +46,8 @@
             android:id="@+id/what_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="text"
+            />
     </LinearLayout>
     <!-- Where is new thing -->
     <LinearLayout
@@ -64,7 +65,10 @@
         <EditText
             android:id="@+id/where_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:imeOptions="actionSend"
+            />
     </LinearLayout>
 
     <Button
