@@ -1,6 +1,7 @@
 package com.bignerdranch.android.tingle;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ public class ThingsDB extends Observable {
     private static ThingsDB sThingsDB;
     //fake database
     private List<Thing> mThingList;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
 
     public static ThingsDB getInstance(Context context) {
         if (sThingsDB == null) {
@@ -47,7 +50,10 @@ public class ThingsDB extends Observable {
 
     // Fill database for testing purposes
     private ThingsDB(Context context) {
+        mContext = context.getApplicationContext();
+        mDatabase = new ThingBaseHelper(mContext).getWritableDatabase();
         mThingList = new ArrayList<Thing>();
+
         mThingList.add(new Thing("Android Phone", "Desk"));
         mThingList.add(new Thing("Big Nerd book", "Desk"));
         mThingList.add(new Thing("Pillow", "Bed"));
