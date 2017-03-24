@@ -32,8 +32,8 @@ public class TingleFragment extends Fragment implements Observer {
     }
 
     private void updateLastThing() {
-        int s = thingsDB.size();
-        if (s > 0) lastAddedText.setText(thingsDB.getThing(s - 1).toString());
+        int s = thingsDB.getThingList().size();
+        if (s > 0) lastAddedText.setText(thingsDB.getThingList().get(s - 1).toString());
         else lastAddedText.setText(R.string.empty_list);
     }
 
