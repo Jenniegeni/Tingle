@@ -10,5 +10,4 @@ public class Tingle extends Application {
         super.onCreate();
         Realm.init(this);
     }
-
 }
