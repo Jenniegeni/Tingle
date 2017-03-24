@@ -6,55 +6,64 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 public class ThingsDB extends Observable {
 
+    private static Realm realm;
     private static ThingsDB sThingsDB;
     //fake database
     private List<Thing> mThingList;
 
+
     public static ThingsDB getInstance(Context context) {
         if (sThingsDB == null) {
+            realm = Realm.getDefaultInstance();
             sThingsDB = new ThingsDB(context);
         }
         return sThingsDB;
     }
 
-    public List<Thing> getThingList() {
-        return mThingList;
-    }
+
+    public OrderedRealmCollection<Thing> getThingsDB() {
+        return realm.where(Thing.class).findAll();    }
 
     public void addThing(Thing thing) {
-        mThingList.add(thing);
+        final Thing fThing = thing;
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(fThing);
+            }});
         setChanged();
         notifyObservers();
     }
 
     public void deleteThing(Thing thing) {
-        mThingList.remove(thing);
-        setChanged();
+        final Thing fThing= thing;
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Thing> rows=realm.where(Thing.class).
+                        equalTo("mId", fThing.getId()).findAll();
+                if (rows.size() > 0) rows.get(0).deleteFromRealm();
+            }});        setChanged();
         notifyObservers();
     }
 
 
     public int size() {
-        return mThingList.size();
+        return getThingsDB().size();
     }
 
     public Thing getThing(int i){
-        return mThingList.get(i);
+        return getThingsDB().get(i);
     }
 
 
     // Fill database for testing purposes
     private ThingsDB(Context context) {
-        mThingList = new ArrayList<Thing>();
-        mThingList.add(new Thing("Android Phone", "Desk"));
-        mThingList.add(new Thing("Big Nerd book", "Desk"));
-        mThingList.add(new Thing("Pillow", "Bed"));
-        mThingList.add(new Thing("Computer", "Desk"));
-        mThingList.add(new Thing("T-shirt", "Wardrobe"));
-        mThingList.add(new Thing("Charger", "Desk"));
-        mThingList.add(new Thing("Backpack", "Floor"));
-        mThingList.add(new Thing("Kleenex", "Drawer"));
     }
 }

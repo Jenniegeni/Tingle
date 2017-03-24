@@ -32,7 +32,7 @@ public class ListFragment extends Fragment implements Observer {
 
         thingsDB = ThingsDB.getInstance(getActivity());
         thingsDB.addObserver(this);
-        listAdapter = new ArrayAdapter<Thing>(getActivity(), R.layout.list_item, thingsDB.getThingList());
+        listAdapter = new ArrayAdapter<Thing>(getActivity(), R.layout.list_item, thingsDB.getThingsDB());
         thingListView = (ListView) v.findViewById(R.id.thing_list_view);
         thingListView.setAdapter(listAdapter);
 
